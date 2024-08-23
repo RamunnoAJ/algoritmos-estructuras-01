@@ -56,8 +56,9 @@ int createCExercise() {
   char mainFileName[10] = "solucion";
   char markdownFileName[15] = "enunciado";
 
-  char *mainContent = readFile("./assets/solucion.txt");
-  char *markdownContent = readFile("./assets/enunciado.txt");
+  char *mainContent = readFile("/usr/local/share/cbpc/assets/solucion.txt");
+  char *markdownContent =
+      readFile("/usr/local/share/cbpc/assets/enunciado.txt");
 
   int totalLengthMainFile = strlen(directoryName) + strlen(mainFileName) + 2;
   char *filePathMainFile = (char *)malloc(totalLengthMainFile);
