@@ -111,6 +111,7 @@ int createCExercise() {
 
     createFile(filePathTextFile, ".txt", "");
   }
+
   createFile(filePathMainFile, ".c", mainContent);
   createFile(filePathMDFile, ".md", markdownContent);
   free(filePathMDFile);
@@ -122,6 +123,8 @@ int createCProgram() {
   char directoryName[32];
   char mainFileName[10] = "main";
   char *mainContent = readFile("/usr/local/share/cbpc/assets/solucion.txt");
+  char *mainContentWithFile =
+      readFile("/usr/local/share/cbpc/assets/solucion_con_texto.txt");
   int hasTextfile;
 
   int totalLengthMainFile = strlen(directoryName) + strlen(mainFileName) + 2;
