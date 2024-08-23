@@ -60,6 +60,7 @@ int createCExercise() {
   char directoryName[32];
   char mainFileName[10] = "solucion";
   char markdownFileName[15] = "enunciado";
+  int hasTextfile;
 
   char *mainContent = readFile("/usr/local/share/cbpc/assets/solucion.txt");
   char *markdownContent =
@@ -79,7 +80,12 @@ int createCExercise() {
     return 1;
   }
 
-  printf("Enter the directory name: ");
+  printf("¿Tiene archivo de texto?\n");
+  printf("0) No\n");
+  printf("1) Si\n");
+  scanf("%d", &hasTextfile);
+
+  printf("Ingrese el nombre del directorio: ");
   scanf("%s", directoryName);
   if (createDirectory(directoryName)) {
     return 1;
@@ -92,6 +98,19 @@ int createCExercise() {
   strcat(filePathMainFile, mainFileName);
   strcat(filePathMDFile, markdownFileName);
 
+  if (hasTextfile) {
+    char filePathTextFile[64];
+    char textFileName[32];
+
+    printf("Ingrese el nombre del archivo de texto: ");
+    scanf("%s", textFileName);
+
+    strcpy(filePathTextFile, directoryName);
+    strcat(filePathTextFile, "/");
+    strcat(filePathTextFile, textFileName);
+
+    createFile(filePathTextFile, ".txt", "");
+  }
   createFile(filePathMainFile, ".c", mainContent);
   createFile(filePathMDFile, ".md", markdownContent);
   free(filePathMDFile);
@@ -103,6 +122,7 @@ int createCProgram() {
   char directoryName[32];
   char mainFileName[10] = "main";
   char *mainContent = readFile("/usr/local/share/cbpc/assets/solucion.txt");
+  int hasTextfile;
 
   int totalLengthMainFile = strlen(directoryName) + strlen(mainFileName) + 2;
   char *filePathMainFile = (char *)malloc(totalLengthMainFile);
@@ -110,6 +130,11 @@ int createCProgram() {
   if (filePathMainFile == 0) {
     return 1;
   }
+
+  printf("¿Tiene archivo de texto?\n");
+  printf("0) No\n");
+  printf("1) Si\n");
+  scanf("%d", &hasTextfile);
 
   printf("Ingresa el nombre del directorio: ");
   scanf("%s", directoryName);
@@ -120,6 +145,20 @@ int createCProgram() {
   strcpy(filePathMainFile, directoryName);
   strcat(filePathMainFile, "/");
   strcat(filePathMainFile, mainFileName);
+
+  if (hasTextfile) {
+    char filePathTextFile[64];
+    char textFileName[32];
+
+    printf("Ingrese el nombre del archivo de texto: ");
+    scanf("%s", textFileName);
+
+    strcpy(filePathTextFile, directoryName);
+    strcat(filePathTextFile, "/");
+    strcat(filePathTextFile, textFileName);
+
+    createFile(filePathTextFile, ".txt", "");
+  }
 
   createFile(filePathMainFile, ".c", mainContent);
   free(filePathMainFile);
