@@ -8,6 +8,7 @@
 struct stat st = {0};
 
 int createCExercise();
+int createCProgram();
 int createDirectory(char name[]);
 void createFile(char name[], char extension[], char content[]);
 void menu(int *op);
@@ -25,6 +26,10 @@ int main() {
       }
       break;
     case 2:
+      error = createCProgram();
+      if (error) {
+        return 1;
+      }
       break;
     default:
       printf("Saliendo del programa...\n");
@@ -97,7 +102,7 @@ int createCExercise() {
 int createCProgram() {
   char directoryName[32];
   char mainFileName[10] = "main";
-  char *mainContent = readFile("./assets/solucion.txt");
+  char *mainContent = readFile("/usr/local/share/cbpc/assets/solucion.txt");
 
   int totalLengthMainFile = strlen(directoryName) + strlen(mainFileName) + 2;
   char *filePathMainFile = (char *)malloc(totalLengthMainFile);
@@ -125,10 +130,10 @@ void menu(int *op) {
   printf("Menu de opciones\n");
   printf("1) C - Ejercicio\n");
   printf("2) C - Programa\n");
-  printf("0) Exit\n");
+  printf("0) Salir\n\n");
 
   do {
-    printf("Ingrese una de las opciones posibles: ");
+    printf("Ingrese una opción: ");
     scanf("%d", op);
   } while (*op < 0 || *op > 2);
 }
