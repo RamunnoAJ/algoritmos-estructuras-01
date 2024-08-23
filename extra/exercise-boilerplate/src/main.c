@@ -83,6 +83,7 @@ int createCExercise() {
   printf("¿Tiene archivo de texto?\n");
   printf("0) No\n");
   printf("1) Si\n");
+  printf("Ingrese una opción: ");
   scanf("%d", &hasTextfile);
 
   printf("Ingrese el nombre del directorio: ");
@@ -137,6 +138,7 @@ int createCProgram() {
   printf("¿Tiene archivo de texto?\n");
   printf("0) No\n");
   printf("1) Si\n");
+  printf("Ingrese una opción: ");
   scanf("%d", &hasTextfile);
 
   printf("Ingresa el nombre del directorio: ");
@@ -184,7 +186,7 @@ char *readFile(char fileName[]) {
   FILE *fptr = fopen(fileName, "r");
 
   if (fptr == NULL) {
-    printf("Error opening file!\n");
+    printf("Error abriendo el archivo\n");
     return NULL;
   }
 
@@ -195,7 +197,7 @@ char *readFile(char fileName[]) {
   char *content = (char *)malloc(fileSize + 1);
 
   if (content == NULL) {
-    printf("Memory allocation failed!\n");
+    printf("Error de malloc\n");
     fclose(fptr);
     return NULL;
   }
