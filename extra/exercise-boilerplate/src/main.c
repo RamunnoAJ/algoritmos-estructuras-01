@@ -174,7 +174,7 @@ void menu(int *op) {
   printf("Menu de opciones\n");
   printf("1) C - Ejercicio\n");
   printf("2) C - Programa\n");
-  printf("0) Salir\n\n");
+  printf("0) Salir\n");
 
   do {
     printf("Ingrese una opción: ");
