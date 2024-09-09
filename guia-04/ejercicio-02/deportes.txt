@@ -1,0 +1,7 @@
+2 Basketball
+6 Natación
+1 Volleyball
+4 Atletismo
+3 Fútbol
+7 Tenis
+5 Beisbol
