@@ -123,6 +123,10 @@ void leer(Empleado empleados[], int *n, Seccion secciones[], int *m,
          2) {
     (*l)++;
   }
+
+  fclose(fpE);
+  fclose(fpS);
+  fclose(fpC);
 }
 
 void imprimirEmpleados(Empleado empleados[], int n) {
