@@ -13,15 +13,58 @@ typedef struct {
 
 void cargarDat(Deportista deportistas[], Deporte deportes[]);
 void leer(Deportista deportistas[], int *n, Deporte deportes[], int *m);
+int obtenerPromedioEdades(Deportista deportistas[], int n);
+int obtenerDeportistasXDeporte(Deportista deportistas[], int n, int codigo);
+void listadoDeportes(Deporte deportes[], int m, Deportista deportistas[],
+                     int n);
 
 int main() {
   Deportista deportistas[50];
   Deporte deportes[20];
   int n, m;
 
-  // cargarDat(deportistas, deportes);
+  cargarDat(deportistas, deportes);
   leer(deportistas, &n, deportes, &m);
+  printf("El promedio de edades de los deportistas es: %d\n",
+         obtenerPromedioEdades(deportistas, n));
+
+  listadoDeportes(deportes, m, deportistas, n);
+
   return 1;
+}
+
+void listadoDeportes(Deporte deportes[], int m, Deportista deportistas[],
+                     int n) {
+  int i;
+  printf("%-25s %-25s\n", "Deporte", "Cantidad deportistas");
+  printf("------------------------------------------------\n");
+
+  for (i = 0; i < m; i++) {
+    printf("%-25s %-25d\n", deportes[i].descripcion,
+           obtenerDeportistasXDeporte(deportistas, n, deportes[i].codigo));
+  }
+}
+
+int obtenerDeportistasXDeporte(Deportista deportistas[], int n, int codigo) {
+  int cantidad = 0, i;
+
+  for (i = 0; i < n; i++) {
+    if (deportistas[i].codigo_deporte == codigo) {
+      cantidad++;
+    }
+  }
+
+  return cantidad;
+}
+
+int obtenerPromedioEdades(Deportista deportistas[], int n) {
+  int suma = 0, i;
+
+  for (i = 0; i < n; i++) {
+    suma += deportistas[i].edad;
+  }
+
+  return (suma / n);
 }
 
 void leer(Deportista deportistas[], int *n, Deporte deportes[], int *m) {

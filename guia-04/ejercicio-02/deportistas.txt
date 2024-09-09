@@ -16,5 +16,5 @@ Miguel,Morales 19 1
 Clara,Ramos 22 2
 Roberto,Navarro 26 3
 Alicia,Fernandez 30 4
-Raul,Ortiz 21 5
-Isabel,Dominguez 23 6
+Raul,Ortiz 21 2
+Isabel,Dominguez 23 2
