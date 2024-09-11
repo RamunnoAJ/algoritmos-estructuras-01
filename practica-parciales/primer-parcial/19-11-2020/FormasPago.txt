@@ -1,0 +1,4 @@
+44 Efectivo 0.00
+77 Credito 10.00
+55 Debito 5.00
+88 Cheque 20.00
