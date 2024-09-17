@@ -1,0 +1,3 @@
+AA01 Miami 3200.2
+BB02 Mykonos 4300.5
+CC03 Merlo 500.3
