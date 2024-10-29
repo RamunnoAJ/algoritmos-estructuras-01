@@ -15,7 +15,7 @@ typedef struct nodoL {
 typedef TNodo *TLista;
 
 void cargaLista(TLista *pl);
-void procesaLista(TLista lista, FILE *arch);
+void procesaLista(TLista lista);
 void eliminarEmpleado(TLista *pl, char codigo_sucursal[], int legajo,
                       int *pudoElim);
 void eliminarNodoPorCodigo(TLista *pl, char c[]);
@@ -25,67 +25,69 @@ int main() {
   FILE *arch;
 
   cargaLista(&lista);
-  arch = fopen("Licencias.txt", "rt");
-
-  if (arch == NULL) {
-    printf("No se pudo abrir el archivo Licencias.txt\n");
-    return 1;
-  } else {
-    procesaLista(lista, arch);
-
-    fclose(arch);
-  }
+  procesaLista(lista);
 
   return 0;
 }
 
-void procesaLista(TLista lista, FILE *arch) {
+void procesaLista(TLista lista) {
+  FILE *arch;
   TLista aux;
   TPILA paux;
   TELEMENTOP elem;
   char codigo_sucursal[MAX_CODIGO], motivo, s1[MAX_CODIGO], s2[MAX_CODIGO];
   int legajo, pedidos_vacaciones, pudoElim, pedidos_rechazados = 0,
-                                            pedidos_concretados = 0;
-  pedidos_vacaciones = 0;
-  iniciap(&paux);
+                                            pedidos_concretados;
 
-  while (fscanf(arch, "%s %d %c", codigo_sucursal, &legajo, &motivo) == 3) {
-    if (motivo == 'V') {
-      pedidos_vacaciones++;
+  arch = fopen("Licencias.txt", "rt");
+  if (arch == NULL) {
+    printf("No se pudo abrir el archivo Licencias.txt\n");
+    return;
+  } else {
+    pedidos_concretados = 0;
+    pedidos_vacaciones = 0;
+    iniciap(&paux);
 
-      aux = lista;
-      while (aux != NULL && strcmp(aux->codigo_sucursal, codigo_sucursal) < 0) {
-        aux = aux->sig;
-      }
+    while (fscanf(arch, "%s %d %c", codigo_sucursal, &legajo, &motivo) == 3) {
+      if (motivo == 'V') {
+        pedidos_vacaciones++;
 
-      if (aux != NULL && !strcmp(aux->codigo_sucursal, codigo_sucursal)) {
-        eliminarEmpleado(&lista, codigo_sucursal, legajo, &pudoElim);
-        if (!pudoElim) {
-          pedidos_rechazados++;
-        } else {
-          pedidos_concretados++;
+        aux = lista;
+        while (aux != NULL &&
+               strcmp(aux->codigo_sucursal, codigo_sucursal) < 0) {
+          aux = aux->sig;
+        }
+
+        if (aux != NULL && !strcmp(aux->codigo_sucursal, codigo_sucursal)) {
+          eliminarEmpleado(&lista, codigo_sucursal, legajo, &pudoElim);
+          if (!pudoElim) {
+            pedidos_rechazados++;
+          } else {
+            pedidos_concretados++;
+          }
         }
       }
     }
-  }
 
-  printf("El total de pedidos rechazados es %d\n", pedidos_rechazados);
-  if (pedidos_vacaciones > 0) {
-    printf("El porcentaje de eliminaciones concretadas sobre el total de "
-           "pedidos de vacaciones es %.2f %c",
-           ((float)pedidos_concretados) * 100 / pedidos_vacaciones, '%');
-  }
+    printf("El total de pedidos rechazados es %d\n", pedidos_rechazados);
+    if (pedidos_vacaciones > 0) {
+      printf("El porcentaje de eliminaciones concretadas sobre el total de "
+             "pedidos de vacaciones es %.2f %c",
+             ((float)pedidos_concretados) * 100 / pedidos_vacaciones, '%');
+    }
 
-  printf("Ingresa dos sucursales que desee eliminar\n");
-  scanf("%s %s", s1, s2);
-
-  while (strcmp(s1, s2) >= 0) {
-    printf("La primer sucursal debe ser menor a la segunda\n");
+    printf("Ingresa dos sucursales que desee eliminar\n");
     scanf("%s %s", s1, s2);
-  }
 
-  eliminarNodoPorCodigo(&lista, s1);
-  eliminarNodoPorCodigo(&lista, s2);
+    while (strcmp(s1, s2) >= 0) {
+      printf("La primer sucursal debe ser menor a la segunda\n");
+      scanf("%s %s", s1, s2);
+    }
+
+    eliminarNodoPorCodigo(&lista, s1);
+    eliminarNodoPorCodigo(&lista, s2);
+    fclose(arch);
+  }
 }
 
 void eliminarEmpleado(TLista *pl, char codigo_sucursal[], int legajo,
